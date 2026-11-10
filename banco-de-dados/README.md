@@ -6,6 +6,7 @@ This directory provides PostgreSQL and MongoDB infrastructure for local study.
 
 - [Exercise 1: Relational schema and inserts](exercicio-1/README.md)
 - [Exercise 2: Joins, filters, and updates](exercicio-2/README.md)
+- [Exercise 3: Documents and flexible schemas](exercicio-3/README.md)
 
 ## Prerequisites
 
