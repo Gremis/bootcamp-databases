@@ -13,8 +13,9 @@ The database exercises will be organized under banco-de-dados/, with one directo
 
 ## Workflow
 
-Feature branches start from develop and are integrated through reviewed pull requests.
-Changes are promoted from develop to production through a separate reviewed pull request.
+Feature branches start from develop.
+Feature pull requests require approval before merging into develop.
+Changes are promoted from develop to production through a separate pull request.
 
 The production branch is the final delivery branch.
 Commit messages follow Conventional Commits.
@@ -23,3 +24,5 @@ Commit messages follow Conventional Commits.
 
 Local .env files must not be committed.
 Environment examples use fictitious values.
+
+See [Local databases](banco-de-dados/README.md) for setup and usage.
