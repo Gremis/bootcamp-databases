@@ -90,7 +90,11 @@ Stop the auxiliary container before running `docker compose down` to remove the 
 - PostgreSQL and MongoDB started and became healthy.
 - PostgreSQL was queried through psql inside its container and reported database `orion_db` and user `orion_user`.
 - MongoDB returned `ok: 1` for an authenticated ping.
-- pgAdmin also connected to PostgreSQL over the Docker network using hostname `db_postgres`.
+- PostgreSQL was also accessed through the auxiliary pgAdmin container. Its browser interface was published on the Mac at `127.0.0.1:8080`; pgAdmin connected to PostgreSQL over the Docker network at `db_postgres:5432`.
+- A separate read-only PostgreSQL protocol client on the Mac authenticated through `127.0.0.1:5432` and queried `current_database()` and `current_user()`, returning `orion_db` and `orion_user`.
+- MongoDB Compass running on the Mac connected to MongoDB through the published database port at `localhost:27017` and queried the exercise documents.
 - Local credentials are stored in the Git-ignored `.env` file.
 
-Connections through the Mac's published database ports and persistence after container recreation were not tested in this activity.
+These are distinct connection paths: pgAdmin's PostgreSQL connection used the Docker network, Compass used the MongoDB port published on the Mac, and the separate PostgreSQL protocol client used the Mac's published PostgreSQL port directly.
+
+Persistence was tested on an isolated temporary replica of this Compose configuration, with separate ports, network, and volumes. Exercises 1 and 2 populated its PostgreSQL instance, and exercises 3 and 4 populated its MongoDB instance. Forced container recreation without volume deletion retained the same volume names and identical database data fingerprints for both databases. The original infrastructure was never recreated or stopped. Its MongoDB document fingerprint and normalized PostgreSQL data-dump fingerprint were unchanged by validation; randomized pg_dump restrict tokens were excluded from the latter comparison. Only the temporary replica and its newly created volumes were removed.

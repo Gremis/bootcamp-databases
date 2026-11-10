@@ -40,7 +40,7 @@ The final `find().sort({ _id: 1 })` query is materialized with `toArray()` and p
 
 Before any write, the script checks whether `posts` already exists. If it does, execution stops with a clear error without modifying or deleting data. Reexecution therefore preserves the existing collection. There is no automatic reset or cleanup, including after a partial failure; inspect any failure before deciding how to proceed.
 
-The protection against reexecution was inspected in the code. The script was not executed a second time, so this protection has not been tested at runtime.
+The protection against reexecution was tested at runtime in isolated temporary development and production MongoDB instances. Reexecution failed with a nonzero exit code and the message `Collection orion_db.posts already exists. Execution stopped without changing data.` The collection data fingerprint remained identical before and after the rejected attempt. The original infrastructure and existing exercise environments were not used for this write-capable test.
 
 ## Validation status
 
@@ -53,6 +53,6 @@ The protection against reexecution was inspected in the code. The script was not
 - [x] Both documents were also queried in MongoDB Compass, connected to the local MongoDB instance through port `27017`.
 - [x] Terminal and Compass screenshots were recorded.
 - [x] The protection against reexecution was inspected in the code.
-- [ ] Verify at runtime that reexecution stops before writing and preserves the existing documents.
+- [x] Runtime reexecution stopped before writing in both temporary instances and preserved the existing document fingerprints.
 
-Initial execution and document validation are complete. Runtime validation of the reexecution protection remains pending.
+Initial execution, document validation, and runtime validation of the reexecution protection are complete. The temporary database resources were removed after testing; existing database data was preserved.
